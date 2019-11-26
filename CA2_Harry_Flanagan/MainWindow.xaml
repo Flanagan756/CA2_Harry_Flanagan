@@ -1,0 +1,32 @@
+﻿<Window x:Class="CA2_Harry_Flanagan.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CA2_Harry_Flanagan"
+        mc:Ignorable="d"
+        Title="Activity Planner" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="59*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Activity Planner" HorizontalAlignment="Left" Margin="50,15,0,0" VerticalAlignment="Top" Height="53" Width="264" Grid.Column="1" FontFamily="Microsoft New Tai Lue" FontSize="36" Foreground="#FF52C1F5"/>
+        <ListBox x:Name="lbxActivites" HorizontalAlignment="Left" Height="205" Margin="50.462,94,0,0" VerticalAlignment="Top" Width="183" SelectionChanged="ListBox_SelectionChanged" Grid.Column="1"/>
+        <Label Content="All Activites" HorizontalAlignment="Left" Margin="50.462,68,0,0" VerticalAlignment="Top" Width="127" Grid.Column="1"/>
+        <ListBox HorizontalAlignment="Left" Height="205" Margin="415.462,94,0,0" VerticalAlignment="Top" Width="183" Grid.Column="1"/>
+        <Label Content="Selected Activites" HorizontalAlignment="Left" Margin="415.462,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.008,0.502" Width="110" Grid.Column="1"/>
+        <Button Content="&gt; &gt;" HorizontalAlignment="Left" Margin="279.462,145,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+        <Button Content="&lt; &lt;" HorizontalAlignment="Left" Margin="279.462,236,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+        <RadioButton Content="All" HorizontalAlignment="Left" Margin="25,117,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Land" HorizontalAlignment="Left" Margin="25,153,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Water" HorizontalAlignment="Left" Margin="25,189,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Air" HorizontalAlignment="Left" Margin="25,224,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Left" Margin="0,319,0,0" VerticalAlignment="Top" Width="85"/>
+        <TextBlock x:Name="txtDesctiption" Grid.Column="1" HorizontalAlignment="Left" Margin="10,350,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="330"/>
+        <Label Content="Cost -" Grid.Column="1" HorizontalAlignment="Left" Margin="365,348,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBlock x:Name="txtCost" Grid.Column="1" HorizontalAlignment="Left" Margin="415,348,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="26" Width="110"/>
+        <Label Content="Total Cost" Grid.Column="1" HorizontalAlignment="Left" Margin="415,36,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="txtTotalCost" Grid.Column="1" HorizontalAlignment="Left" Margin="486,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
+    </Grid>
+</Window>
