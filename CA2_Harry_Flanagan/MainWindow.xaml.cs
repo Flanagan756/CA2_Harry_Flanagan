@@ -22,6 +22,8 @@ namespace CA2_Harry_Flanagan
     {
         //create list
         List<Activity> allActivities = new List<Activity>();
+        List<Activity> selectedActivities = new List<Activity>();
+        List<Activity> filteredActivities = new List<Activity>();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +31,9 @@ namespace CA2_Harry_Flanagan
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+           
+
+            //Create Activity Objects
             Activity l1 = new Activity()
             {
                 Name = "Treking",
@@ -121,14 +126,130 @@ namespace CA2_Harry_Flanagan
             allActivities.Add(a2);
             allActivities.Add(a3);
 
+            //Sort all activities based on the date
+            allActivities.Sort();
+
             //display within the listbox
             lbxActivites.ItemsSource = allActivities;
 
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Btnadd_Click(object sender, RoutedEventArgs e)
         {
+            //What item is selected
+            Activity selectedActivitity = lbxActivites.SelectedItem as Activity;
+
+            //null check
+            if (selectedActivitity != null)
+            {
+
+                //move item from left listbox to right
+                allActivities.Remove(selectedActivitity);
+                selectedActivities.Add(selectedActivitity);
+
+                RefreshScreen();
+            }
 
         }
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+      
+            // Get the currently selected item in the ListBox.
+            Activity selectedActivity = lbxActivites.SelectedItem as Activity;
+
+            //if nothing is selected
+            if (selectedActivity != null)
+            {
+                txtDesctiption.Text = selectedActivity.Description;
+            }
+
+        }
+
+        private void BtnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            //What item is selected
+            Activity selectedActivitity = lbxSelected.SelectedItem as Activity;
+
+            //null check
+            if (selectedActivitity != null)
+            {
+
+                //move item from right listbox to left
+                allActivities.Add(selectedActivitity);
+                selectedActivities.Remove(selectedActivitity);
+
+                RefreshScreen();
+            }
+
+        }
+
+        private void RefreshScreen()
+        {
+            //refresh
+            lbxActivites.ItemsSource = null;
+            lbxActivites.ItemsSource = allActivities;
+
+            lbxSelected.ItemsSource = null;
+            lbxSelected.ItemsSource = selectedActivities;
+        }
+
+        //Works for all radio buttons
+        private void RbAll_Click(object sender, RoutedEventArgs e)
+        {
+            filteredActivities.Clear();
+
+            if(rbAll.IsChecked == true)
+            {
+                //show all activities
+                RefreshScreen();
+            }
+            else if (rbLand.IsChecked == true)
+            {
+                //show all Land activities
+                foreach (Activity activity in allActivities)
+                {
+                    if (activity.TypeOfActivity == TypeOfActivity.Land)
+                    {
+                        //MessageBox.Show("Land Selected");
+                        filteredActivities.Add(activity);
+
+                        lbxActivites.ItemsSource = null;
+                        lbxActivites.ItemsSource = filteredActivities;
+
+                    }
+                }
+            }
+            else if (rbWater.IsChecked == true)
+            {
+                //show all Water activities
+                foreach (Activity activity in allActivities)
+                {
+                    if (activity.TypeOfActivity == TypeOfActivity.Water)
+                    {
+                        filteredActivities.Add(activity);
+                        lbxActivites.ItemsSource = null;
+                        lbxActivites.ItemsSource = filteredActivities;
+
+                    }
+                }
+            }
+            else if (rbAir.IsChecked == true)
+            {
+                //show all Air activities
+                foreach (Activity activity in allActivities)
+                {
+                    if (activity.TypeOfActivity == TypeOfActivity.Air)
+                    {
+                        filteredActivities.Add(activity);
+                        lbxActivites.ItemsSource = null;
+                        lbxActivites.ItemsSource = filteredActivities;
+                    }
+                }
+            }
+            
+
+        }
+
+   
     }
 }

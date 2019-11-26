@@ -13,7 +13,7 @@ namespace CA2_Harry_Flanagan
         Water,
         Land
     }
-    class Activity
+    class Activity: IComparable
         {
 
             /*Propterties*/
@@ -46,6 +46,14 @@ namespace CA2_Harry_Flanagan
         {
             string shortDate = ActivityDate.ToShortDateString();
             return $"{Name} - {shortDate}";
+        }
+     
+
+        public int CompareTo(object obj)
+        {
+            Activity that = (Activity)obj;
+
+            return this.ActivityDate.CompareTo(that.ActivityDate);
         }
     }
  
