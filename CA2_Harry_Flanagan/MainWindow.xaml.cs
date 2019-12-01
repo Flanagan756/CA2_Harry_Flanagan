@@ -24,6 +24,9 @@ namespace CA2_Harry_Flanagan
         List<Activity> allActivities = new List<Activity>();
         List<Activity> selectedActivities = new List<Activity>();
         List<Activity> filteredActivities = new List<Activity>();
+
+        //Varibles
+        decimal totalCost = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -142,12 +145,20 @@ namespace CA2_Harry_Flanagan
             //null check
             if (selectedActivitity != null)
             {
-
+          
                 //move item from left listbox to right
                 allActivities.Remove(selectedActivitity);
                 selectedActivities.Add(selectedActivitity);
 
+                //Sets and displays total cost within the Total Cost textbox
+                totalCost = totalCost + selectedActivitity.Cost;
+                txtTotalCost.Text = totalCost.ToString("C");
+
                 RefreshScreen();
+            }
+               else
+            {
+                MessageBox.Show("No activity selected", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
         }
@@ -160,7 +171,13 @@ namespace CA2_Harry_Flanagan
             //if nothing is selected
             if (selectedActivity != null)
             {
+                //Display activity in text box
                 txtDesctiption.Text = selectedActivity.Description;
+
+               //Converts to string in currency formate and displays cost in text box
+                txtCost.Text = selectedActivity.Cost.ToString("C"); 
+
+               
             }
 
         }
@@ -178,7 +195,16 @@ namespace CA2_Harry_Flanagan
                 allActivities.Add(selectedActivitity);
                 selectedActivities.Remove(selectedActivitity);
 
+                //Sets and displays total cost within the Total Cost textbox
+                totalCost = totalCost - selectedActivitity.Cost;
+                txtTotalCost.Text = totalCost.ToString("C");
+
                 RefreshScreen();
+            }
+            else
+            {
+                //Display message box u
+                 MessageBox.Show("No activity selected", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
         }
