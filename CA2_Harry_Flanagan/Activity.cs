@@ -49,6 +49,7 @@ namespace CA2_Harry_Flanagan
         }
      
 
+        //Check and compare Dates
         public int CompareTo(object obj)
         {
             Activity that = (Activity)obj;

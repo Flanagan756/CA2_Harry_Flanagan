@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+/*Author Harry Flanagan*/
 namespace CA2_Harry_Flanagan
 {
     /// <summary>
@@ -20,28 +20,27 @@ namespace CA2_Harry_Flanagan
     /// </summary>
     public partial class MainWindow : Window
     {
-        //create list
+        //Lists
         List<Activity> allActivities = new List<Activity>();
         List<Activity> selectedActivities = new List<Activity>();
         List<Activity> filteredActivities = new List<Activity>();
 
         //Varibles
         decimal totalCost = 0;
+
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        //Run when window is loaded
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           
-
-            //Create Activity Objects
+            //Create all Activity Objects
             Activity l1 = new Activity()
             {
                 Name = "Treking",
                 Description = "Instructor led group trek through local mountains.",
-                ActivityDate = new DateTime(),
+                ActivityDate = new DateTime(2019, 06, 01),
                 TypeOfActivity = TypeOfActivity.Land,
                 Cost = 20m
             };
@@ -118,7 +117,7 @@ namespace CA2_Harry_Flanagan
                 Cost = 200m
             };
 
-            //add to list
+            //Add to allActivities list
             allActivities.Add(l1);
             allActivities.Add(l2);
             allActivities.Add(l3);
@@ -132,52 +131,73 @@ namespace CA2_Harry_Flanagan
             //Sort all activities based on the date
             allActivities.Sort();
 
-            //display within the listbox
+            //display within the listbox on the right
             lbxActivites.ItemsSource = allActivities;
 
         }
 
         private void Btnadd_Click(object sender, RoutedEventArgs e)
         {
+
             //What item is selected
             Activity selectedActivitity = lbxActivites.SelectedItem as Activity;
 
             //null check
             if (selectedActivitity != null)
             {
-          
-                //move item from left listbox to right
-                allActivities.Remove(selectedActivitity);
-                selectedActivities.Add(selectedActivitity);
+                bool validDate = true; //Used to check if selected activity date != any activity already selected
+                for (int i = 0; i < selectedActivities.Count; i++) //Counts and checks each of the selcted activties
+                {
+                    if (selectedActivitity.ActivityDate == selectedActivities[i].ActivityDate) //If the selected Activty's Date == to any of the dates in the already selected activies
+                    {
+                        //Display message and change validDate to false
+                        MessageBox.Show("Cannot add activties with the same date", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        validDate = false;
+                    }
 
-                //Sets and displays total cost within the Total Cost textbox
-                totalCost = totalCost + selectedActivitity.Cost;
-                txtTotalCost.Text = totalCost.ToString("C");
+
+                }
+                if (validDate == true) //Will only add activity to the right list box if the validDate == true
+                {
+                    //move item from left listbox to right
+                    allActivities.Remove(selectedActivitity);
+                    selectedActivities.Add(selectedActivitity);
+
+                    //Sets and displays total cost within the Total Cost textbox
+                    totalCost = totalCost + selectedActivitity.Cost;
+                    txtTotalCost.Text = totalCost.ToString("C");
+                }
 
                 RefreshScreen();
+
             }
-               else
+            else if (selectedActivitity == null)
             {
+                //Display Message if no activity is selected
                 MessageBox.Show("No activity selected", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else // if the program gets through both of the null checks
+            {
+                MessageBox.Show("Unkown Error", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-      
+
             // Get the currently selected item in the ListBox.
             Activity selectedActivity = lbxActivites.SelectedItem as Activity;
 
-            //if nothing is selected
+            //If nothing is selected
             if (selectedActivity != null)
             {
                 //Display activity in text box
                 txtDesctiption.Text = selectedActivity.Description;
 
-               //Converts to string in currency formate and displays cost in text box
-                txtCost.Text = selectedActivity.Cost.ToString("C"); 
+                //Converts to string in currency formate and displays cost in text box
+                txtCost.Text = selectedActivity.Cost.ToString("C");
 
-               
+
             }
 
         }
@@ -201,17 +221,21 @@ namespace CA2_Harry_Flanagan
 
                 RefreshScreen();
             }
-            else
+            else if (selectedActivitity == null)
             {
-                //Display message box u
-                 MessageBox.Show("No activity selected", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //Display message box if no activity is selected
+                MessageBox.Show("No activity selected", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else // if the program gets through both of the null checks
+            {
+                MessageBox.Show("Unkown Error", "Activity Planner", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
 
         private void RefreshScreen()
         {
-            //refresh
+            //Rereshes the screen
             lbxActivites.ItemsSource = null;
             lbxActivites.ItemsSource = allActivities;
 
@@ -224,7 +248,7 @@ namespace CA2_Harry_Flanagan
         {
             filteredActivities.Clear();
 
-            if(rbAll.IsChecked == true)
+            if (rbAll.IsChecked == true)
             {
                 //show all activities
                 RefreshScreen();
@@ -236,7 +260,7 @@ namespace CA2_Harry_Flanagan
                 {
                     if (activity.TypeOfActivity == TypeOfActivity.Land)
                     {
-                        //MessageBox.Show("Land Selected");
+
                         filteredActivities.Add(activity);
 
                         lbxActivites.ItemsSource = null;
@@ -272,10 +296,12 @@ namespace CA2_Harry_Flanagan
                     }
                 }
             }
-            
+
+
+
 
         }
 
-   
+
     }
 }
